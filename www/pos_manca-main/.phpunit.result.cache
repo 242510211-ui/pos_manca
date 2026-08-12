@@ -1,1 +1,0 @@
-{"version":2,"defects":{"Tests\\Feature\\LaporanPenjualanServiceTest::test_ringkasan_hari_ini_menghitung_transaksi_yang_selesai_hari_ini_meski_dibuat_sebelumnya":7},"times":{"Tests\\Feature\\LaporanPenjualanServiceTest::test_ringkasan_hari_ini_menghitung_transaksi_yang_selesai_hari_ini_meski_dibuat_sebelumnya":0.077}}
