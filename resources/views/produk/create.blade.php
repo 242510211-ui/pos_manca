@@ -66,12 +66,6 @@
                     Tambahkan produk baru ke dalam katalog.
                 </p>
             </div>
-
-            <a href="{{ route('produk.index') }}"
-               class="btn btn-cancel btn-sm d-inline-flex align-items-center gap-2">
-                <i class="bi bi-arrow-left"></i>
-                <span>Kembali</span>
-            </a>
         </div>
 
         {{-- Form --}}

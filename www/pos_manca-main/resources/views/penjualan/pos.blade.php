@@ -149,18 +149,9 @@
                 <p class="page-subtitle mb-0">Kelola transaksi penjualan dengan cepat dan mudah.</p>
             </div>
             <div>
-                {{-- Jika status belum COMPLETED, tombol kembali bisa diarahkan untuk menghapus/membatalkan draft atau sekadar kembali jika controller Anda menggunakan sistem session/temporary cart --}}
-                @if($sale && $sale->status !== 'COMPLETED' && $sale->itemPenjualan->count() == 0)
-                    {{-- Jika keranjang masih kosong, aman tinggal langsung redirect --}}
-                    <a href="{{ route('penjualan.index') }}" class="btn btn-outline-secondary px-4" style="border-radius: 10px; font-weight: 600;">
-                        <i class="bi bi-arrow-left me-1"></i> Kembali
-                    </a>
-                @else
-                    {{-- Jika sudah ada item tapi mau batal saat klik kembali, arahkan ke route destroy penjualan jika diinginkan, atau cukup link biasa jika backend Anda memang mendesain transaksi draft dibiarkan/dibersihkan otomatis oleh cron/job --}}
-                    <a href="{{ route('penjualan.index') }}" class="btn btn-outline-secondary px-4" style="border-radius: 10px; font-weight: 600;">
-                        <i class="bi bi-arrow-left me-1"></i> Kembali
-                    </a>
-                @endif
+                <a href="{{ route('penjualan.index') }}" class="btn btn-outline-secondary px-4" style="border-radius: 10px; font-weight: 600;">
+                    <i class="bi bi-arrow-left me-1"></i> Kembali
+                </a>
             </div>
         </div>
         <div class="row g-4">
@@ -187,7 +178,7 @@
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
 
                             <div class="col-7">
-                                <button type="submit" class="btn btn-product-item w-100 text-start p-2 {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}">
+                                <button type="submit" class="btn btn-product-item w-100 text-start p-2 {{ (isset($sale) && $sale->status === 'COMPLETED') ? 'disabled' : '' }}">
                                     <div class="d-flex align-items-center gap-2">
                                         {{-- Gambar produk --}}
                                         <img src="{{ asset('storage/'.$product->foto) }}"
@@ -213,11 +204,11 @@
                             
                             <div class="col-3">
                                 <input type="number" name="quantity" value="1" min="1"
-                                class="form-control pos-form-control {{ $sale->status === 'COMPLETED' ? 'readonly' : '' }}">
+                                class="form-control pos-form-control {{ (isset($sale) && $sale->status === 'COMPLETED') ? 'readonly' : '' }}">
                             </div>
 
                             <div class="col-2">
-                                @if($product->stok > 0 && $sale->status !== 'COMPLETED')
+                                @if($product->stok > 0 && (!isset($sale) || $sale->status !== 'COMPLETED'))
                                     <button type="submit" class="btn btn-gunmetal-action w-100">
                                         +
                                     </button>
@@ -248,11 +239,11 @@
                                     <th>Harga</th>
                                     <th style="width: 80px;">Qty</th>
                                     <th>Subtotal</th>
-                                    <th style="width: 70px;">Aksi</th>
+                                    <th style="width: 90px;" class="text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($sale->itemPenjualan as $item)
+                                @forelse(($sale->itemPenjualan ?? []) as $item)
                                 <tr>
                                     <td>{{ $item->produk->nama }}</td>
                                     <td>Rp {{ number_format($item->produk->harga_jual) }}</td>
@@ -266,13 +257,15 @@
                                         </form>
                                     </td>
                                     <td>Rp {{ number_format($item->subtotal) }}</td>
-                                    <td>
-                                        @can('delete', $item)
+                                    <td class="text-center">
+                                        {{-- Tombol Hapus Produk dari Keranjang --}}
                                         <form method="POST" action="{{ route('itempenjualan.destroy', $item->id) }}">
-                                            @csrf @method('DELETE')
-                                            <button class="btn btn-danger btn-sm w-100">Hapus</button>
+                                            @csrf 
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm px-2 py-1 d-inline-flex align-items-center gap-1" style="border-radius: 6px; font-size: 0.8rem;">
+                                                <i class="bi bi-trash"></i> Hapus
+                                            </button>
                                         </form>
-                                        @endcan
                                     </td>
                                 </tr>
                                 @empty
@@ -289,16 +282,16 @@
                     <div class="card-footer">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="text-muted fw-semibold">Total Pembayaran:</span>
-                            <strong class="fs-5 text-light">Rp {{ number_format($sale->total_pembayaran) }}</strong>
+                            <strong class="fs-5 text-light">Rp {{ number_format($sale->total_pembayaran ?? 0) }}</strong>
                         </div>
 
-                       <form id="checkoutForm" method="POST" action="{{ route('penjualan.update', $sale->id) }}">
+                       <form id="checkoutForm" method="POST" action="{{ route('penjualan.update', $sale->id ?? 0) }}">
                             @csrf
                             @method('PUT')
 
                             <select name="payment_method" 
                                     class="form-select pos-form-control mb-2"
-                                    {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}
+                                    {{ (isset($sale) && $sale->status === 'COMPLETED') ? 'disabled' : '' }}
                                     required>
                                 <option value="" style="background: #0f172a; color: #64748b;">
                                     Pilih Pembayaran
@@ -312,24 +305,31 @@
                             </select>
 
                             <button type="button"
-                                class="btn btn-success w-100 fw-bold mb-2 {{ $sale->status === 'COMPLETED' ? 'disabled' : '' }}"
+                                class="btn btn-success w-100 fw-bold mb-2 {{ (!isset($sale) || $sale->status === 'COMPLETED' || empty($sale->itemPenjualan) || $sale->itemPenjualan->isEmpty()) ? 'disabled' : '' }}"
                                 data-bs-toggle="modal"
                                 data-bs-target="#checkoutModal">
                                 Checkout
                             </button>
                         </form>
 
-                        {{-- Tombol Batal Transaksi Khusus Admin --}}
-                        @can('delete', $sale)
-                        <button type="button" 
-                                class="btn btn-outline-danger w-100 mt-1" 
-                                style="border-radius: 10px;"
-                                data-bs-toggle="modal" 
-                                data-bs-target="#batalTransaksiModal"
-                                data-penjualan-id="{{ $sale->id }}">
-                            <i class="bi bi-x-circle me-1"></i> Batal Transaksi
-                        </button>
-                        @endcan
+                        {{-- Tombol Batal Transaksi --}}
+                        @if(isset($sale) && $sale->id && isset($sale->itemPenjualan) && !$sale->itemPenjualan->isEmpty() && $sale->status !== 'COMPLETED')
+                            <button type="button" 
+                                    class="btn btn-outline-danger w-100 mt-1" 
+                                    style="border-radius: 10px;"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#batalTransaksiModal"
+                                    data-penjualan-id="{{ $sale->id }}">
+                                <i class="bi bi-x-circle me-1"></i> Batal Transaksi
+                            </button>
+                        @else
+                            <button type="button" 
+                                    class="btn btn-outline-danger w-100 mt-1" 
+                                    style="border-radius: 10px;" 
+                                    disabled>
+                                <i class="bi bi-x-circle me-1"></i> Batal Transaksi
+                            </button>
+                        @endif
 
                         <!-- Modal Checkout Confirmation -->
                         <div class="modal fade" id="checkoutModal" tabindex="-1">

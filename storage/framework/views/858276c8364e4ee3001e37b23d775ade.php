@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'Tambah User'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -82,10 +84,7 @@
                 <h1 class="page-title">Tambah User Baru</h1>
                 <p class="page-subtitle mb-0">Isi formulir di bawah ini untuk menambahkan pengguna baru</p>
             </div>
-            <a href="<?php echo e(route('admin.users')); ?>" class="btn btn-cancel btn-sm d-inline-flex align-items-center gap-2">
-                <i class="bi bi-arrow-left"></i>
-                <span>Kembali</span>
-            </a>
+           
         </div>
 
         
@@ -100,4 +99,4 @@
 </div>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\pos_vancaa-1\pos_vanca\resources\views/users/create.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\pos_manca-main\resources\views/users/create.blade.php ENDPATH**/ ?>

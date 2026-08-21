@@ -105,7 +105,9 @@
 
       <form action="<?php echo e(route('logout')); ?>" method="POST" class="d-flex m-0">
         <?php echo csrf_field(); ?>
-        <button type="submit" class="btn btn-logout-silver btn-sm">Logout</button>
+       <button type="button" class="btn btn-outline-light btn-sm px-3" data-bs-toggle="modal" data-bs-target="#logoutModal" style="border-radius: 8px;">
+    Logout
+</button>
       </form>
     </div>
   </div>

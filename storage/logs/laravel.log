@@ -12937,3 +12937,19 @@
 #64 C:/laragon/www/pos_manca-main/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('C://laragon//www//...')
 #65 {main}
 "} 
+[2026-08-21 03:31:30] local.ERROR: There are no commands defined in the "cache:clear" namespace.
+
+Did you mean this?
+    cache {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"cache:clear\" namespace.
+
+Did you mean this?
+    cache at C:/laragon/www/pos_manca-main/vendor/symfony/console/Application.php:694)
+[stacktrace]
+#0 C:/laragon/www/pos_manca-main/vendor/symfony/console/Application.php(743): Symfony/Component/Console/Application->findNamespace('cache:clear')
+#1 C:/laragon/www/pos_manca-main/vendor/symfony/console/Application.php(298): Symfony/Component/Console/Application->find('cache:clear:cle...')
+#2 C:/laragon/www/pos_manca-main/vendor/symfony/console/Application.php(195): Symfony/Component/Console/Application->doRun(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#3 C:/laragon/www/pos_manca-main/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony/Component/Console/Application->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#4 C:/laragon/www/pos_manca-main/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#5 C:/laragon/www/pos_manca-main/artisan(16): Illuminate/Foundation/Application->handleCommand(Object(Symfony/Component/Console/Input/ArgvInput))
+#6 {main}
+"} 

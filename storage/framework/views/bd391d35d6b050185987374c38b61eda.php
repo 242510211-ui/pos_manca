@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'Edit User'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -95,10 +97,6 @@
                 <h1 class="page-title">Edit User</h1>
                 <p class="page-subtitle mb-0">Ubah informasi atau hak akses pengguna <?php echo e($user->name); ?></p>
             </div>
-            <a href="<?php echo e(route('admin.users')); ?>" class="btn btn-cancel btn-sm d-inline-flex align-items-center gap-2">
-                <i class="bi bi-arrow-left"></i>
-                <span>Kembali</span>
-            </a>
         </div>
 
         
@@ -114,4 +112,4 @@
 </div>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\pos_vancaa-1\pos_vanca\resources\views/users/edit.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\laragon\www\pos_manca-main\resources\views/users/edit.blade.php ENDPATH**/ ?>

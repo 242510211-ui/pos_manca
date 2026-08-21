@@ -84,10 +84,7 @@
                 <h1 class="page-title">Tambah User Baru</h1>
                 <p class="page-subtitle mb-0">Isi formulir di bawah ini untuk menambahkan pengguna baru</p>
             </div>
-            <a href="{{ route('admin.users') }}" class="btn btn-cancel btn-sm d-inline-flex align-items-center gap-2">
-                <i class="bi bi-arrow-left"></i>
-                <span>Kembali</span>
-            </a>
+           
         </div>
 
         {{-- Form Container --}}

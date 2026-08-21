@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'POS'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -149,20 +151,12 @@
                 <p class="page-subtitle mb-0">Kelola transaksi penjualan dengan cepat dan mudah.</p>
             </div>
             <div>
-                
-                <?php if($sale && $sale->status !== 'COMPLETED' && $sale->itemPenjualan->count() == 0): ?>
-                    
-                    <a href="<?php echo e(route('penjualan.index')); ?>" class="btn btn-outline-secondary px-4" style="border-radius: 10px; font-weight: 600;">
-                        <i class="bi bi-arrow-left me-1"></i> Kembali
-                    </a>
-                <?php else: ?>
-                    
-                    <a href="<?php echo e(route('penjualan.index')); ?>" class="btn btn-outline-secondary px-4" style="border-radius: 10px; font-weight: 600;">
-                        <i class="bi bi-arrow-left me-1"></i> Kembali
-                    </a>
-                <?php endif; ?>
+                <a href="<?php echo e(route('penjualan.index')); ?>" class="btn btn-outline-secondary px-4" style="border-radius: 10px; font-weight: 600;">
+                    <i class="bi bi-arrow-left me-1"></i> Kembali
+                </a>
             </div>
         </div>
+
         <div class="row g-4">
 
             
@@ -187,15 +181,13 @@
                             <input type="hidden" name="product_id" value="<?php echo e($product->id); ?>">
 
                             <div class="col-7">
-                                <button type="submit" class="btn btn-product-item w-100 text-start p-2 <?php echo e($sale->status === 'COMPLETED' ? 'disabled' : ''); ?>">
+                                <button type="submit" class="btn btn-product-item w-100 text-start p-2 <?php echo e((isset($sale) && $sale->status === 'COMPLETED') ? 'disabled' : ''); ?>">
                                     <div class="d-flex align-items-center gap-2">
-                                        
                                         <img src="<?php echo e(asset('storage/'.$product->foto)); ?>"
                                          alt="Gambar"
                                          class="rounded-circle"
                                          style="width:45px; height:45px; object-fit:cover; border: 1px solid rgba(255,255,255,0.2);">
 
-                                        
                                         <div class="flex-grow-1 overflow-hidden">
                                             <div class="fw-semibold text-truncate text-light">
                                                 <?php echo e($product->nama); ?>
@@ -215,11 +207,11 @@
                             
                             <div class="col-3">
                                 <input type="number" name="quantity" value="1" min="1"
-                                class="form-control pos-form-control <?php echo e($sale->status === 'COMPLETED' ? 'readonly' : ''); ?>">
+                                class="form-control pos-form-control <?php echo e((isset($sale) && $sale->status === 'COMPLETED') ? 'readonly' : ''); ?>">
                             </div>
 
                             <div class="col-2">
-                                <?php if($product->stok > 0 && $sale->status !== 'COMPLETED'): ?>
+                                <?php if($product->stok > 0 && (!isset($sale) || $sale->status !== 'COMPLETED')): ?>
                                     <button type="submit" class="btn btn-gunmetal-action w-100">
                                         +
                                     </button>
@@ -250,17 +242,18 @@
                                     <th>Harga</th>
                                     <th style="width: 80px;">Qty</th>
                                     <th>Subtotal</th>
-                                    <th style="width: 70px;">Aksi</th>
+                                    <th style="width: 90px;" class="text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $__empty_1 = true; $__currentLoopData = $sale->itemPenjualan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                <?php $__empty_1 = true; $__currentLoopData = ($sale->itemPenjualan ?? []); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <tr>
                                     <td><?php echo e($item->produk->nama); ?></td>
                                     <td>Rp <?php echo e(number_format($item->produk->harga_jual)); ?></td>
                                     <td>
                                         <form method="POST" action="<?php echo e(route('itempenjualan.update', $item->id)); ?>">
-                                            <?php echo csrf_field(); ?> <?php echo method_field('PUT'); ?>
+                                            <?php echo csrf_field(); ?> 
+                                            <?php echo method_field('PUT'); ?>
                                             <input type="number" name="quantity"
                                             value="<?php echo e($item->kuantitas); ?>"
                                             class="form-control pos-form-control form-control-sm text-center"
@@ -268,13 +261,16 @@
                                         </form>
                                     </td>
                                     <td>Rp <?php echo e(number_format($item->subtotal)); ?></td>
-                                    <td>
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete', $item)): ?>
+                                    
+                                    
+                                    <td class="text-center">
                                         <form method="POST" action="<?php echo e(route('itempenjualan.destroy', $item->id)); ?>">
-                                            <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
-                                            <button class="btn btn-danger btn-sm w-100">Hapus</button>
+                                            <?php echo csrf_field(); ?> 
+                                            <?php echo method_field('DELETE'); ?>
+                                            <button type="submit" class="btn btn-danger btn-sm px-2 py-1" style="border-radius: 6px; font-size: 0.8rem;">
+                                                <i class="bi bi-trash"></i> Hapus
+                                            </button>
                                         </form>
-                                        <?php endif; ?>
                                     </td>
                                 </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -291,16 +287,16 @@
                     <div class="card-footer">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="text-muted fw-semibold">Total Pembayaran:</span>
-                            <strong class="fs-5 text-light">Rp <?php echo e(number_format($sale->total_pembayaran)); ?></strong>
+                            <strong class="fs-5 text-light">Rp <?php echo e(number_format($sale->total_pembayaran ?? 0)); ?></strong>
                         </div>
 
-                       <form id="checkoutForm" method="POST" action="<?php echo e(route('penjualan.update', $sale->id)); ?>">
+                       <form id="checkoutForm" method="POST" action="<?php echo e(route('penjualan.update', $sale->id ?? 0)); ?>">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('PUT'); ?>
 
                             <select name="payment_method" 
                                     class="form-select pos-form-control mb-2"
-                                    <?php echo e($sale->status === 'COMPLETED' ? 'disabled' : ''); ?>
+                                    <?php echo e((isset($sale) && $sale->status === 'COMPLETED') ? 'disabled' : ''); ?>
 
                                     required>
                                 <option value="" style="background: #0f172a; color: #64748b;">
@@ -315,7 +311,7 @@
                             </select>
 
                             <button type="button"
-                                class="btn btn-success w-100 fw-bold mb-2 <?php echo e($sale->status === 'COMPLETED' ? 'disabled' : ''); ?>"
+                                class="btn btn-success w-100 fw-bold mb-2 <?php echo e((!isset($sale) || $sale->status === 'COMPLETED' || empty($sale->itemPenjualan) || $sale->itemPenjualan->isEmpty()) ? 'disabled' : ''); ?>"
                                 data-bs-toggle="modal"
                                 data-bs-target="#checkoutModal">
                                 Checkout
@@ -323,15 +319,22 @@
                         </form>
 
                         
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete', $sale)): ?>
-                        <button type="button" 
-                                class="btn btn-outline-danger w-100 mt-1" 
-                                style="border-radius: 10px;"
-                                data-bs-toggle="modal" 
-                                data-bs-target="#batalTransaksiModal"
-                                data-penjualan-id="<?php echo e($sale->id); ?>">
-                            <i class="bi bi-x-circle me-1"></i> Batal Transaksi
-                        </button>
+                        <?php if(isset($sale) && $sale->id && isset($sale->itemPenjualan) && !$sale->itemPenjualan->isEmpty() && $sale->status !== 'COMPLETED'): ?>
+                            <button type="button" 
+                                    class="btn btn-outline-danger w-100 mt-1" 
+                                    style="border-radius: 10px;"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#batalTransaksiModal"
+                                    data-penjualan-id="<?php echo e($sale->id); ?>">
+                                <i class="bi bi-x-circle me-1"></i> Batal Transaksi
+                            </button>
+                        <?php else: ?>
+                            <button type="button" 
+                                    class="btn btn-outline-danger w-100 mt-1" 
+                                    style="border-radius: 10px;" 
+                                    disabled>
+                                <i class="bi bi-x-circle me-1"></i> Batal Transaksi
+                            </button>
                         <?php endif; ?>
 
                         <!-- Modal Checkout Confirmation -->

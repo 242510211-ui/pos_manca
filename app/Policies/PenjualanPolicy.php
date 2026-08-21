@@ -8,18 +8,11 @@ use App\Models\User;
 class PenjualanPolicy
 {
     /**
-     * Create a new policy instance.
+     * Determine whether the user can delete the model.
      */
     public function delete(User $user, Penjualan $penjualan): bool
     {
-       return $user->role->name === 'admin'
-       && $penjualan->status === 'OPEN'; 
-    }
-
-    public function view(User $user, Penjualan $penjualan):bool
-    {
-        return $user->role->name === 'admin'
-        && $penjualan->status === 'OPEN';
+        // Izinkan jika pengguna adalah 'admin' ATAU 'kasir'
+        return in_array($user->role->name, ['admin', 'kasir']);
     }
 }
-

@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'Edit Produk'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -64,12 +66,6 @@
                     Perbarui informasi data produk yang sudah ada.
                 </p>
             </div>
-
-            <a href="<?php echo e(route('produk.index')); ?>"
-               class="btn btn-cancel btn-sm d-inline-flex align-items-center gap-2">
-                <i class="bi bi-arrow-left"></i>
-                <span>Kembali</span>
-            </a>
         </div>
 
         

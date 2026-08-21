@@ -96,10 +96,6 @@
                 <h1 class="page-title">Edit User</h1>
                 <p class="page-subtitle mb-0">Ubah informasi atau hak akses pengguna {{ $user->name }}</p>
             </div>
-            <a href="{{ route('admin.users') }}" class="btn btn-cancel btn-sm d-inline-flex align-items-center gap-2">
-                <i class="bi bi-arrow-left"></i>
-                <span>Kembali</span>
-            </a>
         </div>
 
         {{-- Form Container --}}
