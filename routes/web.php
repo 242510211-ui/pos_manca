@@ -7,11 +7,20 @@ use App\Http\Controllers\ItemPenjualanController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AboutController;
 
 // Route yang bisa diakses ketika belum login
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/auth', [AuthController::class, 'auth'])->name('auth');
+});
+
+// Route yang bisa diakses ketika user sudah login
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/tentang-saya', [AboutController::class, 'index'])->name('tentang-saya');
+
 });
 
 // Route yang bisa diakses ketika user sudah login

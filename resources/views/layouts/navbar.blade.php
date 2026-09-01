@@ -101,6 +101,13 @@
              Penjualan
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link {{ Request::is('tentang-saya*') ? 'active' : '' }}" 
+             href="{{ route('tentang-saya') }}">
+             Tentang Saya
+          </a>
+        </li>
       </ul>
 
       <form action="{{ route('logout') }}" method="POST" class="d-flex m-0">

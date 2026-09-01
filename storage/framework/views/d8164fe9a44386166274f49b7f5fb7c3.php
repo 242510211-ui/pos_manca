@@ -101,6 +101,13 @@
              Penjualan
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link <?php echo e(Request::is('tentang-saya*') ? 'active' : ''); ?>" 
+             href="<?php echo e(route('tentang-saya')); ?>">
+             Tentang Saya
+          </a>
+        </li>
       </ul>
 
       <form action="<?php echo e(route('logout')); ?>" method="POST" class="d-flex m-0">
