@@ -531,13 +531,14 @@ class ComposerStaticInitd8f67b824a1bf31c8999ead558d9b485
     );
 
     public static $classMap = array (
+        'App\\Console\\Commands\\CleanDeleteableProduk' => __DIR__ . '/../..' . '/app/Console/Commands/CleanDeleteableProduk.php',
+        'App\\Http\\Controllers\\AboutController' => __DIR__ . '/../..' . '/app/Http/Controllers/AboutController.php',
         'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
         'App\\Http\\Controllers\\ItemPenjualanController' => __DIR__ . '/../..' . '/app/Http/Controllers/ItemPenjualanController.php',
         'App\\Http\\Controllers\\PenjualanController' => __DIR__ . '/../..' . '/app/Http/Controllers/PenjualanController.php',
         'App\\Http\\Controllers\\ProdukController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProdukController.php',
-        'App\\Http\\Controllers\\Usercontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/Usercontroller.php',
         'App\\Http\\Middleware\\RoleMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/RoleMiddleware.php',
         'App\\Http\\Requests\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/LoginRequest.php',
         'App\\Http\\Requests\\Produk\\StoreRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Produk/StoreRequest.php',
@@ -6792,6 +6793,7 @@ class ComposerStaticInitd8f67b824a1bf31c8999ead558d9b485
         'Termwind\\ValueObjects\\Style' => __DIR__ . '/..' . '/nunomaduro/termwind/src/ValueObjects/Style.php',
         'Termwind\\ValueObjects\\Styles' => __DIR__ . '/..' . '/nunomaduro/termwind/src/ValueObjects/Styles.php',
         'Tests\\Feature\\ExampleTest' => __DIR__ . '/../..' . '/tests/Feature/ExampleTest.php',
+        'Tests\\Feature\\LaporanPenjualanServiceTest' => __DIR__ . '/../..' . '/tests/Feature/LaporanPenjualanServiceTest.php',
         'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Tests\\Unit\\ExampleTest' => __DIR__ . '/../..' . '/tests/Unit/ExampleTest.php',
         'TheSeer\\Tokenizer\\Exception' => __DIR__ . '/..' . '/theseer/tokenizer/src/Exception.php',
