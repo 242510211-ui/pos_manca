@@ -22,20 +22,20 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-           
-            'email'    => ['required','email'],
-            'password' => ['required', 'min:8'],
-           
+            'email'    => ['required', 'email'],
+            'password' => ['required'], // 'min:8' dihapus agar tidak memicu error redirect saat login
         ];
     }
 
-    public function messages(): array {
-
-        return[
-            'email.required'    =>'Email wajib diisi.',
-            'email.email'       =>'Format email tidak valid.',
-            'password.required' =>'password wajib diisi.',
-            'password.min'      =>'password minimal :min karakter.',
+    /**
+     * Custom message for validation errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required'    => 'Email wajib diisi.',
+            'email.email'       => 'Format email tidak valid.',
+            'password.required' => 'Password wajib diisi.',
         ];
     }
 }
