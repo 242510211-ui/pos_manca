@@ -63,7 +63,7 @@
 <nav class="navbar navbar-expand-lg navbar-silver sticky-top">
   <div class="container-fluid">
     <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-      <span>Aplikasi POS</span>
+      <span>OUTDOOR STORE</span>
     </a>
     
     <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,7 +105,7 @@
         <li class="nav-item">
           <a class="nav-link <?php echo e(Request::is('tentang-saya*') ? 'active' : ''); ?>" 
              href="<?php echo e(route('tentang-saya')); ?>">
-             Tentang Saya
+             Tentang
           </a>
         </li>
       </ul>

@@ -9,21 +9,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
     <style>
-        /* 🔴 KUNCI AGAR NAVBAR & CONTENT BISA 100% FULL WIDTH */
-        html, body {
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            overflow-x: hidden; /* Mencegah scrollbar horizontal berlebih */
-            background-color: #0d0f12 !important;
-        }
+    /* 🔴 KUNCI UTAMA: Tambahkan min-height: 100vh di html & body */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 100vh !important; /* Tambahkan baris ini */
+        overflow-x: hidden;
+        background-color: #0d0f12 !important;
+    }
 
-        #app, main {
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
-        }
+    #app, main {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        min-height: 100vh !important; /* Tambahkan baris ini juga */
+    }
     </style>
 </head>
 <body>
